@@ -31,7 +31,6 @@
     #progress-bar {
       height: 100%;
       background-color: #61A3A6; /* Light blue color for the progress bar */
-      width: 0;
       border-radius: 10px;
       text-align: center;
       line-height: 20px;
@@ -51,21 +50,18 @@
     const button = document.getElementById("button");
     const progressBar = document.getElementById("progress-bar");
 
-    let clicks = 0;
-    let progress = 0;
+    // Load progress from local storage on page load
+    let progress = parseFloat(localStorage.getItem("progress")) || 0;
+    progressBar.style.width = progress + "%";
+    progressBar.textContent = progress.toFixed(1) + "%";
 
     button.addEventListener("click", () => {
-      clicks++;
-      if (clicks <= 3) {
-        progress += 33.33; // 100% / 3 clicks = 33.33% per click
-        progressBar.style.width = progress + "%";
-        progressBar.textContent = progress.toFixed(1) + "%";
-      } else {
-        clicks = 0;
-        progress = 0;
-        progressBar.style.width = "0%";
-        progressBar.textContent = "0%";
-      }
+      progress += 33.33; // 100% / 3 clicks = 33.33% per click
+      progressBar.style.width = progress + "%";
+      progressBar.textContent = progress.toFixed(1) + "%";
+
+      // Save progress to local storage
+      localStorage.setItem("progress", progress.toString());
     });
   </script>
 </body>
