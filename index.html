@@ -3,17 +3,17 @@
 <head>
   <style>
     body {
-      background: transparent; /* Set a transparent background for the body */
+      background: transparent;
       font-family: Arial, sans-serif;
-      margin: 0; /* Remove default margin */
+      margin: 0;
     }
     #container {
       text-align: center;
       margin-top: 20px;
-      background: transparent; /* Set a transparent background for the container */
+      background: transparent;
     }
     #button {
-      background-color: #5BC8E7; /* Relaxing turquoise color for the button */
+      background-color: #5BC8E7;
       color: white;
       padding: 8px 16px;
       border: none;
@@ -24,13 +24,14 @@
     #progress-bar-container {
       width: 150px;
       height: 20px;
-      background-color: transparent; /* Set a transparent background for the progress bar container */
+      background-color: transparent;
       border-radius: 10px;
       margin: 10px auto;
     }
     #progress-bar {
       height: 100%;
-      background-color: #61A3A6; /* Light blue color for the progress bar */
+      background-color: #61A3A6;
+      width: 0;
       border-radius: 10px;
       text-align: center;
       line-height: 20px;
@@ -50,27 +51,34 @@
     const button = document.getElementById("button");
     const progressBar = document.getElementById("progress-bar");
 
-    // Load progress from local storage on page load
-    let progress = parseFloat(localStorage.getItem("progress")) || 0;
+    let clicks = 0;
+    let progress = 0;
 
-    function updateProgressBar() {
-      if (progress >= 100) {
-        // Reset the progress when it reaches 100%
-        progress = 0;
-      } else {
-        progress = Math.min(progress + 33.33, 100); // Prevent progress from going beyond 100%
-      }
-
-      // Update the progress bar and save to local storage
+    // Retrieve progress value from local storage if available
+    const savedProgress = localStorage.getItem("progress");
+    if (savedProgress) {
+      progress = parseFloat(savedProgress);
       progressBar.style.width = progress + "%";
       progressBar.textContent = progress.toFixed(1) + "%";
-      localStorage.setItem("progress", progress.toString());
     }
 
-    button.addEventListener("click", updateProgressBar);
-
-    // Initialize the progress bar
-    updateProgressBar();
+    button.addEventListener("click", () => {
+      clicks++;
+      if (clicks <= 3) {
+        progress += 33.33;
+        progressBar.style.width = progress + "%";
+        progressBar.textContent = progress.toFixed(1) + "%";
+        // Save progress to local storage
+        localStorage.setItem("progress", progress);
+      } else {
+        clicks = 0;
+        progress = 0;
+        progressBar.style.width = "0%";
+        progressBar.textContent = "0%";
+        // Clear progress from local storage
+        localStorage.removeItem("progress");
+      }
+    });
   </script>
 </body>
 </html>
