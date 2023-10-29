@@ -58,25 +58,33 @@
     const savedProgress = localStorage.getItem("progress");
     if (savedProgress) {
       progress = parseFloat(savedProgress);
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      if (progress > 100) {
+        progress = 100;
+      }
       progressBar.style.width = progress + "%";
       progressBar.textContent = progress.toFixed(1) + "%";
+      // Save progress to local storage
+      localStorage.setItem("progress", progress);
     }
 
     button.addEventListener("click", () => {
       clicks++;
       if (clicks <= 3) {
         progress += 33.33;
-        progressBar.style.width = progress + "%";
-        progressBar.textContent = progress.toFixed(1) + "%";
-        // Save progress to local storage
-        localStorage.setItem("progress", progress);
+        updateProgressBar();
       } else {
         clicks = 0;
         progress = 0;
-        progressBar.style.width = "0%";
-        progressBar.textContent = "0%";
-        // Clear progress from local storage
-        localStorage.removeItem("progress");
+        updateProgressBar();
+      }
+      if (progress === 100) {
+        // Reset the progress to 0% if it reaches 100%
+        progress = 0;
+        updateProgressBar();
       }
     });
   </script>
