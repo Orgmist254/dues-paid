@@ -4,7 +4,6 @@
     <style>
         .widget-container {
             display: inline-block;
-            position: relative;
         }
 
         .button {
@@ -14,8 +13,7 @@
             border-radius: 5px; /* Round edges */
             padding: 10px 20px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden; /* Clip the progress bar to stay inside the button */
+            position: relative; /* Set button position to relative */
         }
 
         .progress-bar {
@@ -27,7 +25,7 @@
             background-color: rgba(255, 87, 51, 0.7); /* Slightly transparent progress bar color */
             border-top-left-radius: 5px; /* Round edges on the left */
             border-bottom-left-radius: 5px;
-            z-index: -1; /* Place the progress bar behind the button text */
+            z-index: -1; /* Place the progress bar behind the button */
         }
     </style>
 </head>
