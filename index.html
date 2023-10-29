@@ -15,7 +15,7 @@
             padding: 10px 20px;
             cursor: pointer;
             position: relative;
-            z-index: 1; /* Ensure the button text is above the progress bar */
+            overflow: hidden; /* Clip the progress bar to stay inside the button */
         }
 
         .progress-bar {
@@ -27,14 +27,16 @@
             background-color: rgba(255, 87, 51, 0.7); /* Slightly transparent progress bar color */
             border-top-left-radius: 5px; /* Round edges on the left */
             border-bottom-left-radius: 5px;
-            z-index: 0; /* Place the progress bar behind the button text */
+            z-index: -1; /* Place the progress bar behind the button text */
         }
     </style>
 </head>
 <body>
     <div class="widget-container">
-        <button class="button" id="dues-button">Dues Paid</button>
-        <div class="progress-bar" id="progress-bar"></div>
+        <button class="button" id="dues-button">
+            Dues Paid
+            <div class="progress-bar" id="progress-bar"></div>
+        </button>
     </div>
 
     <script>
