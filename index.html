@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .widget-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .button {
+            background-color: #008b8b; /* Button background color */
+            color: #fff; /* Button text color */
+            border: none;
+            border-radius: 5px; /* Round edges */
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background-color: #ff5722; /* Progress bar color */
+            border-top-left-radius: 5px; /* Round edges on the left */
+            border-bottom-left-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <button class="button" id="dues-button">Dues Paid</button>
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <script>
+        const button = document.getElementById("dues-button");
+        const progressBar = document.getElementById("progress-bar");
+        const maxPushes = 3; // Maximum number of button pushes
+
+        let pushes = 0;
+
+        button.addEventListener("click", () => {
+            if (pushes < maxPushes) {
+                pushes++;
+                const progress = (pushes / maxPushes) * 100;
+                progressBar.style.width = progress + "%";
+            } else {
+                // Reset when the maximum pushes are reached
+                pushes = 0;
+                progressBar.style.width = 0;
+            }
+        });
+    </script>
+</body>
+</html>
