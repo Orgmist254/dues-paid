@@ -52,17 +52,25 @@
 
     // Load progress from local storage on page load
     let progress = parseFloat(localStorage.getItem("progress")) || 0;
-    progressBar.style.width = progress + "%";
-    progressBar.textContent = progress.toFixed(1) + "%";
 
-    button.addEventListener("click", () => {
-      progress += 33.33; // 100% / 3 clicks = 33.33% per click
+    function updateProgressBar() {
+      if (progress >= 100) {
+        // Reset the progress when it reaches 100%
+        progress = 0;
+      } else {
+        progress += 33.33; // 100% / 3 clicks = 33.33% per click
+      }
+
+      // Update the progress bar and save to local storage
       progressBar.style.width = progress + "%";
       progressBar.textContent = progress.toFixed(1) + "%";
-
-      // Save progress to local storage
       localStorage.setItem("progress", progress.toString());
-    });
+    }
+
+    button.addEventListener("click", updateProgressBar);
+
+    // Initialize the progress bar
+    updateProgressBar();
   </script>
 </body>
 </html>
