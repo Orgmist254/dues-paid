@@ -58,7 +58,7 @@
         // Reset the progress when it reaches 100%
         progress = 0;
       } else {
-        progress += 33.33; // 100% / 3 clicks = 33.33% per click
+        progress = Math.min(progress + 33.33, 100); // Prevent progress from going beyond 100%
       }
 
       // Update the progress bar and save to local storage
