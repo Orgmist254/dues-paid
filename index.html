@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        .widget-container {
-            display: inline-block;
-        }
-
-        .button {
-            background-color: #6D98AB; /* Button background color */
-            color: #fff; /* Button text color */
-            border: none;
-            border-radius: 5px; /* Round edges */
-            padding: 10px 20px;
-            cursor: pointer;
-            position: relative; /* Set button position to relative */
-        }
-
-        .progress-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0;
-            background-color: rgba(255, 87, 51, 0.7); /* Slightly transparent progress bar color */
-            border-top-left-radius: 5px; /* Round edges on the left */
-            border-bottom-left-radius: 5px;
-            z-index: -1; /* Place the progress bar behind the button */
-        }
-    </style>
+  <style>
+    body {
+      background-color: #f0f0f0; /* Background color for relaxation */
+      font-family: Arial, sans-serif;
+    }
+    #container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    #button {
+      background-color: #4CAF50; /* Relaxing green color for the button */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    #progress-bar-container {
+      width: 200px;
+      height: 30px;
+      background-color: #ccc; /* Gray background for the progress bar container */
+      border-radius: 15px;
+      margin: 20px auto;
+    }
+    #progress-bar {
+      height: 100%;
+      background-color: #2196F3; /* Relaxing blue color for the progress bar */
+      width: 0;
+      border-radius: 15px;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <div class="widget-container">
-        <button class="button" id="dues-button">
-            Dues Paid
-            <div class="progress-bar" id="progress-bar"></div>
-        </button>
+  <div id="container">
+    <button id="button">Dues Paid</button>
+    <div id="progress-bar-container">
+      <div id="progress-bar">0%</div>
     </div>
+  </div>
 
-    <script>
-        const button = document.getElementById("dues-button");
-        const progressBar = document.getElementById("progress-bar");
-        const maxPushes = 3; // Maximum number of button pushes
+  <script>
+    const button = document.getElementById("button");
+    const progressBar = document.getElementById("progress-bar");
 
-        let pushes = 0;
+    let clicks = 0;
+    let progress = 0;
 
-        button.addEventListener("click", () => {
-            if (pushes < maxPushes) {
-                pushes++;
-                const progress = (pushes / maxPushes) * 100;
-                progressBar.style.width = progress + "%";
-            } else {
-                // Reset when the maximum pushes are reached
-                pushes = 0;
-                progressBar.style.width = 0;
-                button.textContent = "Dues Paid"; // Reset button text
-            }
-        });
-    </script>
+    button.addEventListener("click", () => {
+      clicks++;
+      if (clicks <= 3) {
+        progress += 33.33; // 100% / 3 clicks = 33.33% per click
+        progressBar.style.width = progress + "%";
+        progressBar.textContent = progress.toFixed(1) + "%";
+      } else {
+        clicks = 0;
+        progress = 0;
+        progressBar.style.width = "0%";
+        progressBar.textContent = "0%";
+      }
+    });
+  </script>
 </body>
 </html>
